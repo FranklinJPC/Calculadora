@@ -22,11 +22,16 @@ public class calculator {
     private JButton a0Button;
     public JPanel panelCalculator;
     private JLabel labelPantalla;
+    private JButton buttonPunto;
+    private JButton cButton;
+    private JButton CEButton;
+    private JButton button2;
 
-    private String numeros = null;
+    private String numeros = "";
     private double resultado, numPrimero;
     private boolean activador = false;
     private String operador = null;
+    private boolean decimales = true;
 
     public calculator()
     {
@@ -185,6 +190,107 @@ public class calculator {
                     numeros = "";
                     activador = false;
                     operador = "division";
+                }
+            }
+        });
+        button8.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                double numeroAcutlaPantalla;
+
+                if (operador.equals("nulo"))
+                    labelPantalla.setText(numeros);
+                else if (operador == "suma")
+                {
+                    numeroAcutlaPantalla = Double.parseDouble(numeros);
+                    resultado = numPrimero + numeroAcutlaPantalla;
+                    labelPantalla.setText(String.format("%.2f", resultado));
+                    numeros = String.valueOf(resultado);
+                    operador = "nulo";
+                }
+                else if (operador == "resta")
+                {
+                    numeroAcutlaPantalla = Double.parseDouble(numeros);
+                    resultado = numPrimero - numeroAcutlaPantalla;
+                    labelPantalla.setText(String.format("%.2f", resultado));
+                    numeros = String.valueOf(resultado);
+                    operador = "nulo";
+                }
+                else if (operador == "multiplicacion")
+                {
+                    numeroAcutlaPantalla = Double.parseDouble(numeros);
+                    resultado = numPrimero * numeroAcutlaPantalla;
+                    labelPantalla.setText(String.format("%.2f", resultado));
+                    numeros = String.valueOf(resultado);
+                    operador = "nulo";
+                }
+                else if (operador == "division")
+                {
+                    numeroAcutlaPantalla = Double.parseDouble(numeros);
+                    if (numeroAcutlaPantalla == 0)
+                        labelPantalla.setText("No se puede dividir entre 0");
+                    else {
+                        resultado = numPrimero / numeroAcutlaPantalla;
+                        labelPantalla.setText(String.format("%.2f", resultado));
+                        numeros = String.valueOf(resultado);
+                    }
+                    operador = "nulo";
+                }
+                labelResult.setText("");
+                activador = true;
+            }
+        });
+        buttonPunto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        buttonPunto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(decimales)
+                {
+                    if (numeros.equals(""))
+                        numeros = "0.";
+                    else
+                        numeros += ".";
+                }
+                labelPantalla.setText(numeros);
+                decimales = false;
+            }
+        });
+        cButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                labelPantalla.setText("0");
+                labelResult.setText("");
+                numeros = "";
+                activador = true;
+                decimales = true;
+                operador = "nulo";
+            }
+        });
+        CEButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                labelPantalla.setText("0");
+                numeros = "";
+                decimales = true;
+            }
+        });
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int tamanioNumero = numeros.length();
+                if (tamanioNumero > 0)
+                {
+                    if (tamanioNumero != 1)
+                        numeros = numeros.substring(0, numeros.length() - 1);
+                    else
+                        numeros = "0";
+                    labelPantalla.setText(numeros);
                 }
             }
         });
